@@ -1,0 +1,20 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {    
+    implementation 'org.xerial:sqlite-jdbc:3.45.2.0'
+}
+
+sourceSets {
+    main.kotlin.srcDirs += '.'
+}
+
+application {
+    mainClass = 'MainKt'
+}
