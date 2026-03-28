@@ -1,5 +1,22 @@
 # studia-ebiznes
 
+## lab-02-scala
+
+[Relevant commit](44b8d47d30d0f7974867524a006d9fc8cc735847) and a short video of dockerised app working via ngrok.
+
+https://github.com/user-attachments/assets/adff25de-5f27-4300-a934-bc47e1df6f84
+
+3.0 - :white_check_mark:
+
+3.5 - :white_check_mark:
+
+4.0 - :white_check_mark:
+
+4.5 - :white_check_mark:
+
+5.0 - :white_check_mark:
+
+
 ## lab-01-docker
 
 3.0 - :white_check_mark: - [obraz](https://hub.docker.com/repository/docker/pugor/ebiznes-lab01-docker/tags/3.0/sha256-28db75d5903ec9ff696de2e9b3d8e7b567d7af414b20659b99413d94c50255b2) - [dockerfile](https://github.com/Pug0r/studia-ebiznes/blob/main/lab-01-docker/3.0/dockerfile)
