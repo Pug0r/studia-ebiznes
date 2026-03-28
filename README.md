@@ -2,7 +2,7 @@
 
 ## lab-02-scala
 
-[Relevant commit](44b8d47d30d0f7974867524a006d9fc8cc735847) and a short video of dockerised app working via ngrok.
+[Relevant commit](https://github.com/Pug0r/studia-ebiznes/commit/44b8d47d30d0f7974867524a006d9fc8cc735847) and a short video of dockerised app working via ngrok.
 
 https://github.com/user-attachments/assets/adff25de-5f27-4300-a934-bc47e1df6f84
 
