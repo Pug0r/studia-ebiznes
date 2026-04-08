@@ -1,0 +1,21 @@
+{
+    "name": "Ktor Discord Client",
+    "build": {
+        "dockerfile": "../Dockerfile",
+        "context": "..",
+        "target": "build" 
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "mathiasfrohlich.Kotlin",
+                "fwcd.kotlin",
+                "vscjava.vscode-java-pack"
+            ]
+        }
+    },
+    "runArgs": [
+        "--env-file",
+        ".devcontainer/.env"
+    ]
+}
