@@ -1,5 +1,19 @@
 # studia-ebiznes
 
+## lab-03-kotlin
+
+[commit](https://github.com/Pug0r/studia-ebiznes/commit/7ee19048a9d50962cc34c9cdfe848e16cc9d423e)
+
+3.0 - :white_check_mark:
+
+3.5 - :white_check_mark:
+
+4.0 - :white_check_mark:
+
+4.5 - :white_check_mark:
+
+5.0 - :x:
+
 ## lab-02-scala
 
 [Relevant commit](https://github.com/Pug0r/studia-ebiznes/commit/44b8d47d30d0f7974867524a006d9fc8cc735847) and a short video of dockerised app working via ngrok.
