@@ -4,6 +4,8 @@
 
 [commit](https://github.com/Pug0r/studia-ebiznes/commit/7ee19048a9d50962cc34c9cdfe848e16cc9d423e)
 
+https://github.com/user-attachments/assets/705614ab-12e7-4556-8ee4-d04b57da730c
+
 3.0 - :white_check_mark:
 
 3.5 - :white_check_mark:
