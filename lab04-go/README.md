@@ -4,10 +4,10 @@ zaimplementować proste endpointy do dodawania oraz wyświetlania danych
 za pomocą modeli. Jako bazę danych można wybrać dowolną, sugerowałbym
 jednak pozostać przy sqlite.
 
-- [ ] 3.0 Należy stworzyć aplikację we frameworki echo w j. Go, która będzie
+- [x] 3.0 Należy stworzyć aplikację we frameworki echo w j. Go, która będzie
 miała kontroler Produktów zgodny z CRUD
 
-- [ ] 3.5 Należy stworzyć model Produktów wykorzystując gorm oraz
+- [x] 3.5 Należy stworzyć model Produktów wykorzystując gorm oraz
 wykorzystać model do obsługi produktów (CRUD) w kontrolerze (zamiast
 listy)
 
