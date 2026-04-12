@@ -1,5 +1,20 @@
 # studia-ebiznes
 
+## lab-04-go
+
+https://github.com/user-attachments/assets/5ab417c5-f373-422c-858b-0c1337bdd2aa
+
+
+3.0 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/53fd53e1301352f9251dd787a46d537c91982a6f)
+
+3.5 - :white_check_mark: - same as above
+
+4.0 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/7241dadbcf1740761ff948bfb89e1a109cade545)
+
+4.5 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/d465e196b18bafe6e2b46edcf4f3c426c7b5893a)
+
+5.0 - :x:
+
 ## lab-03-kotlin
 
 [commit](https://github.com/Pug0r/studia-ebiznes/commit/7ee19048a9d50962cc34c9cdfe848e16cc9d423e)
