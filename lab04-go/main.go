@@ -16,6 +16,13 @@ type Product struct {
 	Price float64 `json:"price"`
 }
 
+type Cart struct {
+	ID        uint    `json:"id" gorm:"primaryKey"`
+	ProductID uint    `json:"product_id"`
+	Product   Product `json:"product"`
+	Quantity  int     `json:"quantity"`
+}
+
 var db *gorm.DB
 
 func main() {
@@ -25,7 +32,7 @@ func main() {
 		panic(err)
 	}
 
-	if err := db.AutoMigrate(&Product{}); err != nil {
+	if err := db.AutoMigrate(&Product{}, &Cart{}); err != nil {
 		panic(err)
 	}
 
@@ -36,6 +43,8 @@ func main() {
 	e.POST("/products", createProduct)
 	e.PUT("/products/:id", updateProduct)
 	e.DELETE("/products/:id", deleteProduct)
+	e.GET("/carts", getCarts)
+	e.POST("/carts", createCart)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
@@ -128,4 +137,41 @@ func deleteProduct(c echo.Context) error {
 	}
 
 	return c.NoContent(http.StatusNoContent)
+}
+
+func getCarts(c echo.Context) error {
+	var carts []Cart
+	if err := db.Preload("Product").Find(&carts).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "database error"})
+	}
+	return c.JSON(http.StatusOK, carts)
+}
+
+func createCart(c echo.Context) error {
+	var input struct {
+		ProductID uint `json:"product_id"`
+		Quantity  int  `json:"quantity"`
+	}
+	if err := c.Bind(&input); err != nil {
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "invalid payload"})
+	}
+
+	var product Product
+	if err := db.First(&product, input.ProductID).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return c.JSON(http.StatusNotFound, map[string]string{"error": "product not found"})
+		}
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "database error"})
+	}
+
+	cart := Cart{ProductID: input.ProductID, Quantity: input.Quantity}
+	if err := db.Create(&cart).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "database error"})
+	}
+
+	if err := db.Preload("Product").First(&cart, cart.ID).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "database error"})
+	}
+
+	return c.JSON(http.StatusCreated, cart)
 }
