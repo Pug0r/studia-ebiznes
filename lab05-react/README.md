@@ -7,7 +7,7 @@ serwerowej dane, a w Produktach powinniśmy pobierać dane o produktach
 z aplikacji serwerowej. Aplikacja serwera w języku Go. Dane pomiędzy wszystkimi komponentami powinny być
 przesyłane za pomocą React hooks.
 
-- [ ] 3.0 W ramach projektu należy stworzyć dwa komponenty: Produkty oraz
+- [x] 3.0 W ramach projektu należy stworzyć dwa komponenty: Produkty oraz
 Płatności; Płatności powinny wysyłać do aplikacji serwerowej dane, a w
 Produktach powinniśmy pobierać dane o produktach z aplikacji
 serwerowej;

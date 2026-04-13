@@ -1,0 +1,45 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+main {
+  max-width: 720px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.layout {
+  display: grid;
+  gap: 24px;
+}
+
+form {
+  display: grid;
+  gap: 8px;
+  max-width: 320px;
+}
+
+input,
+button {
+  padding: 8px;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+@media (min-width: 900px) {
+  main {
+    max-width: 1000px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr 320px;
+    align-items: start;
+  }
+}
