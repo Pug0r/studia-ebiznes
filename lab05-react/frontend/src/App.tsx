@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
+import { Link, Navigate, Route, Routes } from 'react-router-dom'
 import Products from './components/Products'
 import Payments from './components/Payments'
+import Cart from './components/Cart'
+import type { Product } from './components/Products'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'
+const API_URL = import.meta.env.VITE_API_URL || '/api'
 
 export type PaymentPayload = {
   email: string
@@ -10,6 +13,7 @@ export type PaymentPayload = {
 }
 
 export default function App() {
+  const [cartItems, setCartItems] = useState<Product[]>([])
   const [message, setMessage] = useState('')
   const [payments, setPayments] = useState<PaymentPayload[]>([])
 
@@ -27,6 +31,14 @@ export default function App() {
       setMessage('Nie udało się pobrać płatności')
     })
   }, [])
+
+  function addToCart(product: Product): void {
+    setCartItems((previous) => [...previous, product])
+  }
+
+  function removeFromCart(index: number): void {
+    setCartItems((previous) => previous.filter((_, itemIndex) => itemIndex !== index))
+  }
 
   async function handlePayment(data: PaymentPayload): Promise<void> {
     setMessage('Wysyłanie...')
@@ -49,22 +61,34 @@ export default function App() {
   return (
     <main>
       <h1>Sklep</h1>
-      <div className="layout">
-        <div>
-          <Products apiUrl={API_URL} />
-          <Payments onSubmit={handlePayment} message={message} />
-        </div>
-        <section>
-          <h2>Zapisane płatności</h2>
-          <ul>
-            {payments.map((payment, index) => (
-              <li key={`${payment.email}-${payment.amount}-${index}`}>
-                {payment.email} - {payment.amount} PLN
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
+      <nav>
+        <Link to="/products">Produkty</Link>
+        <Link to="/cart">Koszyk ({cartItems.length})</Link>
+        <Link to="/payments">Płatności</Link>
+      </nav>
+      <Routes>
+        <Route path="/products" element={<Products apiUrl={API_URL} onAddToCart={addToCart} />} />
+        <Route path="/cart" element={<Cart items={cartItems} onRemove={removeFromCart} />} />
+        <Route
+          path="/payments"
+          element={
+            <div className="layout">
+              <Payments onSubmit={handlePayment} message={message} />
+              <section>
+                <h2>Zapisane płatności</h2>
+                <ul>
+                  {payments.map((payment, index) => (
+                    <li key={`${payment.email}-${payment.amount}-${index}`}>
+                      {payment.email} - {payment.amount} PLN
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </div>
+          }
+        />
+        <Route path="*" element={<Navigate to="/products" replace />} />
+      </Routes>
     </main>
   )
 }

@@ -13,6 +13,16 @@ main {
   padding: 0 16px;
 }
 
+nav {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+nav a {
+  color: inherit;
+}
+
 .layout {
   display: grid;
   gap: 24px;
@@ -27,6 +37,14 @@ form {
 input,
 button {
   padding: 8px;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+li button {
+  margin-left: 8px;
 }
 
 ul {

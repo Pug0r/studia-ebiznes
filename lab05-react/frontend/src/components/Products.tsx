@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-type Product = {
+export type Product = {
   id: number
   name: string
   price: number
@@ -8,9 +8,10 @@ type Product = {
 
 type ProductsProps = {
   apiUrl: string
+  onAddToCart: (product: Product) => void
 }
 
-export default function Products({ apiUrl }: ProductsProps) {
+export default function Products({ apiUrl, onAddToCart }: ProductsProps) {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -44,6 +45,9 @@ export default function Products({ apiUrl }: ProductsProps) {
           {products.map((product) => (
             <li key={product.id}>
               {product.name} - {product.price} PLN
+              <button type="button" onClick={() => onAddToCart(product)}>
+                Dodaj do koszyka
+              </button>
             </li>
           ))}
         </ul>
