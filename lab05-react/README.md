@@ -16,4 +16,4 @@ serwerowej;
 pomocą React hooks
 - [x] 4.5 Należy dodać skrypt uruchamiający aplikację serwerową oraz
 kliencką na dockerze via docker-compose
-- [ ] 5.0 Należy wykorzystać axios’a oraz dodać nagłówki pod CORS
+- [x] 5.0 Należy wykorzystać axios’a oraz dodać nagłówki pod CORS

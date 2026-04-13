@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
+import axios from 'axios'
 import { API_URL } from '../config'
 import type { PaymentPayload } from '../types'
 
@@ -16,12 +17,8 @@ export function PaymentsProvider({ children }: { children: ReactNode }) {
   const [message, setMessage] = useState('')
 
   async function loadPayments(): Promise<void> {
-    const response = await fetch(`${API_URL}/payments`)
-    if (!response.ok) {
-      throw new Error('Błąd pobierania płatności')
-    }
-    const data: PaymentPayload[] = await response.json()
-    setPayments(data)
+    const response = await axios.get<PaymentPayload[]>(`${API_URL}/payments`)
+    setPayments(response.data)
   }
 
   useEffect(() => {
@@ -33,14 +30,7 @@ export function PaymentsProvider({ children }: { children: ReactNode }) {
   async function handlePayment(data: PaymentPayload): Promise<void> {
     setMessage('Wysyłanie...')
     try {
-      const response = await fetch(`${API_URL}/payments`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-      if (!response.ok) {
-        throw new Error('Błąd płatności')
-      }
+      await axios.post(`${API_URL}/payments`, data)
       await loadPayments()
       setMessage('Płatność zapisana')
     } catch {

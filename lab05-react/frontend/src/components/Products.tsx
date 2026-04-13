@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import axios from 'axios'
 import { API_URL } from '../config'
 import { useCart } from '../hooks/useCart'
 import type { Product } from '../types'
@@ -12,12 +13,8 @@ export default function Products() {
   useEffect(() => {
     async function loadProducts(): Promise<void> {
       try {
-        const response = await fetch(`${API_URL}/products`)
-        if (!response.ok) {
-          throw new Error('Błąd pobierania produktów')
-        }
-        const data: Product[] = await response.json()
-        setProducts(data)
+        const response = await axios.get<Product[]>(`${API_URL}/products`)
+        setProducts(response.data)
       } catch {
         setError('Nie udało się pobrać produktów')
       } finally {
