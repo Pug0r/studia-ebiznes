@@ -1,5 +1,19 @@
 # studia-ebiznes
 
+## lab-05-react
+
+https://github.com/user-attachments/assets/3783a467-bbac-4009-ba65-43c6aa00890e
+
+3.0 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/b6368066685da3021026a99da703d96d8872e167)
+
+3.5 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/1fbf9d566775064ecb6a1b07304173ea3f4c26d7)
+
+4.0 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/90c25b453dc6d6478bc0b6f9c82d9fb6677a2bba)
+
+4.5 - :white_check_mark: - dodane na 3.0
+
+5.0 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/968c665ed64a4a4d0f784a6dec5982cf5da7c4d6)
+
 ## lab-04-go
 
 https://github.com/user-attachments/assets/5ab417c5-f373-422c-858b-0c1337bdd2aa
