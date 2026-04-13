@@ -1,11 +1,8 @@
-import type { Product } from './Products'
+import { useCart } from '../hooks/useCart'
 
-type CartProps = {
-  items: Product[]
-  onRemove: (index: number) => void
-}
-
-export default function Cart({ items, onRemove }: CartProps) {
+export default function Cart() {
+  const { cartItems, removeFromCart } = useCart()
+  const items = cartItems
   const total = items.reduce((sum, item) => sum + item.price, 0)
 
   return (
@@ -18,7 +15,7 @@ export default function Cart({ items, onRemove }: CartProps) {
             {items.map((item, index) => (
               <li key={`${item.id}-${index}`}>
                 {item.name} - {item.price} PLN
-                <button type="button" onClick={() => onRemove(index)}>
+                <button type="button" onClick={() => removeFromCart(index)}>
                   Usuń
                 </button>
               </li>

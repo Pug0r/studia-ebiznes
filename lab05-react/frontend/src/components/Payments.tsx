@@ -1,19 +1,15 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import type { PaymentPayload } from '../App'
+import { usePayments } from '../hooks/usePayments'
 
-type PaymentsProps = {
-  onSubmit: (payload: PaymentPayload) => Promise<void>
-  message: string
-}
-
-export default function Payments({ onSubmit, message }: PaymentsProps) {
+export default function Payments() {
+  const { handlePayment, message } = usePayments()
   const [email, setEmail] = useState('')
   const [amount, setAmount] = useState('')
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault()
-    await onSubmit({
+    await handlePayment({
       email,
       amount: Number(amount)
     })

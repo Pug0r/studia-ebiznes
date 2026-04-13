@@ -1,17 +1,10 @@
 import { useEffect, useState } from 'react'
+import { API_URL } from '../config'
+import { useCart } from '../hooks/useCart'
+import type { Product } from '../types'
 
-export type Product = {
-  id: number
-  name: string
-  price: number
-}
-
-type ProductsProps = {
-  apiUrl: string
-  onAddToCart: (product: Product) => void
-}
-
-export default function Products({ apiUrl, onAddToCart }: ProductsProps) {
+export default function Products() {
+  const { addToCart } = useCart()
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -19,7 +12,7 @@ export default function Products({ apiUrl, onAddToCart }: ProductsProps) {
   useEffect(() => {
     async function loadProducts(): Promise<void> {
       try {
-        const response = await fetch(`${apiUrl}/products`)
+        const response = await fetch(`${API_URL}/products`)
         if (!response.ok) {
           throw new Error('Błąd pobierania produktów')
         }
@@ -33,7 +26,7 @@ export default function Products({ apiUrl, onAddToCart }: ProductsProps) {
     }
 
     loadProducts()
-  }, [apiUrl])
+  }, [])
 
   return (
     <section>
@@ -45,7 +38,7 @@ export default function Products({ apiUrl, onAddToCart }: ProductsProps) {
           {products.map((product) => (
             <li key={product.id}>
               {product.name} - {product.price} PLN
-              <button type="button" onClick={() => onAddToCart(product)}>
+              <button type="button" onClick={() => addToCart(product)}>
                 Dodaj do koszyka
               </button>
             </li>
