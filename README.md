@@ -1,5 +1,20 @@
 # studia-ebiznes
 
+
+## lab-06-tests
+
+[raport z testow](lab06-tests/reports/report.html)
+
+3.0 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/7391c9f3e0718912cacfa8e2e591a4119db15793)
+
+3.5 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/6118f778e78e466e45d573346eabd66380f4a2f6)
+
+4.0 - :x:
+
+4.5 - :x: 
+
+5.0 - :x: 
+
 ## lab-05-react
 
 https://github.com/user-attachments/assets/3783a467-bbac-4009-ba65-43c6aa00890e
