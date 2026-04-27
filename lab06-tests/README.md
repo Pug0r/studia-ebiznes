@@ -4,7 +4,7 @@ Należy stworzyć 20 przypadków testowych używając Selenium.
 Testy mają w sumie zawierać minimum 50 asercji (3.5). 
 
 - [x] 3.0 Należy stworzyć 20 przypadków testowych Selenium
-- [ ] 3.5 Należy rozszerzyć testy funkcjonalne, aby zawierały minimum 50
+- [x] 3.5 Należy rozszerzyć testy funkcjonalne, aby zawierały minimum 50
 asercji
 - [ ] 4.0 Należy stworzyć testy jednostkowe do wybranego wcześniejszego
 projektu z minimum 50 asercjami

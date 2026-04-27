@@ -14,7 +14,10 @@ def test_app_title_visible(driver, wait_timeout):
     app_page = AppPage(driver, wait_timeout)
     app_page.wait_for_app_shell()
 
-    assert driver.find_element(By.TAG_NAME, "h1").text == "Sklep"
+    title = driver.find_element(By.TAG_NAME, "h1")
+    assert title.is_displayed()
+    assert title.text == "Sklep"
+    assert "/products" in driver.current_url
 
 
 def test_redirects_to_products_view_on_open(driver, wait_timeout):
@@ -22,6 +25,8 @@ def test_redirects_to_products_view_on_open(driver, wait_timeout):
     app_page.wait_for_app_shell()
 
     WebDriverWait(driver, wait_timeout).until(EC.text_to_be_present_in_element((By.TAG_NAME, "h2"), "Produkty"))
+    assert driver.find_element(By.TAG_NAME, "h2").text == "Produkty"
+    assert driver.find_element(By.TAG_NAME, "h1").text == "Sklep"
     assert "/products" in driver.current_url
 
 
@@ -29,21 +34,30 @@ def test_navigation_contains_products_link(driver, wait_timeout):
     app_page = AppPage(driver, wait_timeout)
     app_page.wait_for_app_shell()
 
-    assert driver.find_element(By.LINK_TEXT, "Produkty").is_displayed()
+    products_link = driver.find_element(By.LINK_TEXT, "Produkty")
+    assert products_link.is_displayed()
+    assert products_link.text == "Produkty"
+    assert products_link.get_attribute("href").endswith("/products")
 
 
 def test_navigation_contains_cart_link(driver, wait_timeout):
     app_page = AppPage(driver, wait_timeout)
     app_page.wait_for_app_shell()
 
-    assert driver.find_element(By.PARTIAL_LINK_TEXT, "Koszyk").is_displayed()
+    cart_link = driver.find_element(By.PARTIAL_LINK_TEXT, "Koszyk")
+    assert cart_link.is_displayed()
+    assert cart_link.text.startswith("Koszyk")
+    assert cart_link.get_attribute("href").endswith("/cart")
 
 
 def test_navigation_contains_payments_link(driver, wait_timeout):
     app_page = AppPage(driver, wait_timeout)
     app_page.wait_for_app_shell()
 
-    assert driver.find_element(By.LINK_TEXT, "Płatności").is_displayed()
+    payments_link = driver.find_element(By.LINK_TEXT, "Płatności")
+    assert payments_link.is_displayed()
+    assert payments_link.text == "Płatności"
+    assert payments_link.get_attribute("href").endswith("/payments")
 
 
 def test_products_list_is_visible(driver, wait_timeout):
@@ -52,7 +66,10 @@ def test_products_list_is_visible(driver, wait_timeout):
     products_page = ProductsPage(driver, wait_timeout)
     products_page.wait_for_loaded()
 
-    assert len(products_page.get_item_texts()) > 0
+    item_texts = products_page.get_item_texts()
+    assert len(item_texts) > 0
+    assert len(item_texts) >= 3
+    assert all("PLN" in text for text in item_texts)
 
 
 def test_products_contains_laptop_item(driver, wait_timeout):
@@ -61,7 +78,10 @@ def test_products_contains_laptop_item(driver, wait_timeout):
     products_page = ProductsPage(driver, wait_timeout)
     products_page.wait_for_loaded()
 
-    assert any("Laptop" in text for text in products_page.get_item_texts())
+    item_texts = products_page.get_item_texts()
+    assert any("Laptop" in text for text in item_texts)
+    assert any("Mysz" in text for text in item_texts)
+    assert any("3999" in text for text in item_texts)
 
 
 def test_each_product_has_add_button(driver, wait_timeout):
@@ -70,14 +90,20 @@ def test_each_product_has_add_button(driver, wait_timeout):
     products_page = ProductsPage(driver, wait_timeout)
     products_page.wait_for_loaded()
 
-    assert products_page.get_add_button_count() == len(products_page.get_item_texts())
+    button_count = products_page.get_add_button_count()
+    item_count = len(products_page.get_item_texts())
+    assert button_count > 0
+    assert item_count >= 3
+    assert button_count == item_count
 
 
 def test_cart_badge_starts_at_zero(driver, wait_timeout):
     app_page = AppPage(driver, wait_timeout)
     app_page.wait_for_app_shell()
 
-    assert "Koszyk (0)" in app_page.get_cart_badge_text()
+    cart_badge = app_page.get_cart_badge_text()
+    assert cart_badge.startswith("Koszyk")
+    assert "Koszyk (0)" in cart_badge
 
 
 def test_cart_view_shows_empty_message_initially(driver, wait_timeout):
@@ -88,6 +114,7 @@ def test_cart_view_shows_empty_message_initially(driver, wait_timeout):
     cart_page.wait_for_loaded()
 
     assert cart_page.is_empty_visible()
+    assert len(cart_page.get_item_texts()) == 0
 
 
 def test_adding_product_updates_cart_badge(driver, wait_timeout):
@@ -95,9 +122,14 @@ def test_adding_product_updates_cart_badge(driver, wait_timeout):
     app_page.wait_for_app_shell()
     products_page = ProductsPage(driver, wait_timeout)
     products_page.wait_for_loaded()
-    products_page.add_first_product()
+    added_product_name = products_page.add_first_product()
 
     assert "Koszyk (1)" in app_page.get_cart_badge_text()
+    app_page.go_to_cart()
+    cart_page = CartPage(driver, wait_timeout)
+    cart_page.wait_for_loaded()
+    assert len(cart_page.get_item_texts()) == 1
+    assert any(added_product_name in text for text in cart_page.get_item_texts())
 
 
 def test_added_product_is_visible_in_cart(driver, wait_timeout):
@@ -112,6 +144,7 @@ def test_added_product_is_visible_in_cart(driver, wait_timeout):
     cart_page.wait_for_loaded()
     cart_items = cart_page.get_item_texts()
 
+    assert len(cart_items) == 1
     assert any(product_name in item_text for item_text in cart_items)
 
 
@@ -129,6 +162,8 @@ def test_removing_product_empties_cart(driver, wait_timeout):
     cart_page.wait_for_empty()
 
     assert cart_page.is_empty_visible()
+    assert len(cart_page.get_item_texts()) == 0
+    assert "Koszyk (0)" in app_page.get_cart_badge_text()
 
 
 def test_payments_view_is_visible(driver, wait_timeout):
@@ -139,6 +174,7 @@ def test_payments_view_is_visible(driver, wait_timeout):
     payments_page.wait_for_loaded()
 
     assert driver.find_element(By.TAG_NAME, "h2").text == "Płatności"
+    assert driver.find_element(By.XPATH, "//button[normalize-space()='Wyślij']").is_displayed()
 
 
 def test_payments_form_has_required_email_field(driver, wait_timeout):
@@ -148,6 +184,7 @@ def test_payments_form_has_required_email_field(driver, wait_timeout):
 
     email_input = WebDriverWait(driver, wait_timeout).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "input[type='email']")))
     assert email_input.get_attribute("required") is not None
+    assert email_input.get_attribute("type") == "email"
 
 
 def test_payments_form_has_numeric_amount_field(driver, wait_timeout):
@@ -157,6 +194,7 @@ def test_payments_form_has_numeric_amount_field(driver, wait_timeout):
 
     amount_input = WebDriverWait(driver, wait_timeout).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "input[type='number']")))
     assert amount_input.get_attribute("type") == "number"
+    assert amount_input.get_attribute("step") == "0.01"
 
 
 def test_submitting_valid_payment_shows_success_message(driver, wait_timeout):
@@ -171,6 +209,7 @@ def test_submitting_valid_payment_shows_success_message(driver, wait_timeout):
     payments_page.wait_for_success()
 
     assert driver.find_element(By.XPATH, "//p[normalize-space()='Płatność zapisana']").is_displayed()
+    assert payments_page.has_saved_payment(unique_email)
 
 
 def test_submitting_valid_payment_adds_item_to_saved_payments(driver, wait_timeout):
@@ -186,6 +225,7 @@ def test_submitting_valid_payment_adds_item_to_saved_payments(driver, wait_timeo
     payments_page.wait_for_success()
 
     WebDriverWait(driver, wait_timeout).until(lambda current_driver: payments_page.get_saved_payment_count() == before_count + 1)
+    assert payments_page.get_saved_payment_count() == before_count + 1
     assert payments_page.has_saved_payment(unique_email)
 
 
@@ -198,6 +238,7 @@ def test_payment_form_is_invalid_for_wrong_email(driver, wait_timeout):
 
     payments_page.send_payment("wrong-email", "10")
     assert payments_page.is_form_valid() is False
+    assert len(driver.find_elements(By.XPATH, "//p[normalize-space()='Płatność zapisana']")) == 0
 
 
 def test_amount_input_has_min_zero(driver, wait_timeout):
@@ -207,3 +248,4 @@ def test_amount_input_has_min_zero(driver, wait_timeout):
 
     amount_input = WebDriverWait(driver, wait_timeout).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "input[type='number']")))
     assert amount_input.get_attribute("min") == "0"
+    assert amount_input.get_attribute("required") is not None
