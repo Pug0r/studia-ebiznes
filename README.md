@@ -3,7 +3,9 @@
 
 ## lab-06-tests
 
-[raport z testow](lab06-tests/reports/report.html)
+Test report
+![obrazek](lab06-tests/reports/report.png)
+[html](lab06-tests/reports/report.html)
 
 3.0 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/7391c9f3e0718912cacfa8e2e591a4119db15793)
 
