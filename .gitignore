@@ -181,3 +181,13 @@ $RECYCLE.BIN/
 
 # Built Visual Studio Code Extensions
 *.vsix
+
+### Python
+# Bytecode and interpreter cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Test and tooling caches
+.pytest_cache/
