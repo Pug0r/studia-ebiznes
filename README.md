@@ -1,5 +1,19 @@
 # studia-ebiznes
 
+## lab-08-oauth
+
+https://github.com/user-attachments/assets/2643b27c-b244-4c8a-84c9-2115eed7716e
+
+3.0 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/e5be9c42907de860569201341e4f8d71adfb44ae)
+
+3.5 - :white_check_mark: - same as above
+
+4.0 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/e90d090a5bf92cd8e8bb3e550619bee29b2e12e4)
+
+4.5 - :x:
+
+5.0 - :x:
+
 
 ## lab-07-sonarr
 
