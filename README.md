@@ -1,6 +1,15 @@
 # studia-ebiznes
 
 
+## lab-07-sonarr
+
+for project from lab05 (go for server, react for client)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Pug0r_studia-ebiznes&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Pug0r_studia-ebiznes)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Pug0r_studia-ebiznes&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Pug0r_studia-ebiznes)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Pug0r_studia-ebiznes&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=Pug0r_studia-ebiznes)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Pug0r_studia-ebiznes&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=Pug0r_studia-ebiznes)
+
 ## lab-06-tests
 
 Test report
