@@ -4,6 +4,7 @@ import axios from 'axios'
 const API = 'http://localhost:8080'
 
 export default function App() {
+  const oauthSuccess = new URLSearchParams(window.location.search).get('oauth') === 'ok'
   const [mode, setMode] = useState('login')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -24,6 +25,9 @@ export default function App() {
   return (
     <main>
       <h1>Lab08 OAuth</h1>
+      <a href="http://localhost:8080/auth/google">
+        Login with Google
+      </a>
       <button onClick={() => setMode('login')} disabled={mode === 'login'}>
         Login
       </button>
@@ -41,6 +45,7 @@ export default function App() {
         </label>
         <button type="submit">Submit</button>
       </form>
+      {oauthSuccess && <p style={{ color: 'green' }}>OAuth login successful</p>}
       {message && <p>{String(message)}</p>}
     </main>
   )
