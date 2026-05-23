@@ -10,6 +10,17 @@ for project from lab05 (go for server, react for client)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Pug0r_studia-ebiznes&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=Pug0r_studia-ebiznes)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Pug0r_studia-ebiznes&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=Pug0r_studia-ebiznes)
 
+
+3.0 - :white_check_mark:
+
+3.5 - :white_check_mark:
+
+4.0 - :white_check_mark:
+
+4.5 - :white_check_mark:
+
+5.0 - :x:
+
 ## lab-06-tests
 
 Test report
