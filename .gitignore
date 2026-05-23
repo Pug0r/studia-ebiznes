@@ -1,3 +1,19 @@
+# Go
+lab08-auth/backend/app.db
+lab08-auth/backend/data/
+
+# Node
+lab08-auth/frontend/node_modules/
+lab08-auth/frontend/dist/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+
+
+
 ### C#
 # Build results
 [Bb]in/
