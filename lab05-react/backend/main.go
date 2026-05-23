@@ -5,6 +5,9 @@ import (
 	"net/http"
 )
 
+string const contentType = "Content-Type"
+string const applicationJSON = "application/json"
+
 type Product struct {
 	ID    int     `json:"id"`
 	Name  string  `json:"name"`
@@ -28,7 +31,7 @@ func withCORS(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		w.Header().Set("Access-Control-Allow-Headers", contentType)
 		if r.Method == http.MethodOptions {
 			w.WriteHeader(http.StatusNoContent)
 			return
@@ -42,7 +45,7 @@ func productsHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set(contentType, applicationJSON)
 	json.NewEncoder(w).Encode(products)
 }
 
@@ -51,7 +54,7 @@ func paymentsHandler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodGet:
 		items := make([]Payment, len(payments))
 		copy(items, payments)
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set(contentType, applicationJSON)
 		json.NewEncoder(w).Encode(items)
 	case http.MethodPost:
 		var p Payment
@@ -60,7 +63,7 @@ func paymentsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		payments = append(payments, p)
-		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set(contentType, "application/json")
 		json.NewEncoder(w).Encode(map[string]string{"status": "ok"})
 	default:
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
