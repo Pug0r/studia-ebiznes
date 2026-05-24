@@ -2,7 +2,7 @@
 
 ## lab-09-llm
 
-https://github.com/user-attachments/assets/2643b27c-b244-4c8a-84c9-2115eed7716e
+https://github.com/user-attachments/assets/034eb732-4401-47ce-bfd0-81aff84a0812
 
 3.0 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/62df8912af8f833e75394feffd690738205bd8f9)
 
@@ -13,8 +13,6 @@ https://github.com/user-attachments/assets/2643b27c-b244-4c8a-84c9-2115eed7716e
 4.5 - :x:
 
 5.0 - :x:
-
-https://github.com/user-attachments/assets/034eb732-4401-47ce-bfd0-81aff84a0812
 
 ## lab-08-oauth
 
