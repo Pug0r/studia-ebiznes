@@ -4,6 +4,8 @@
 
 https://github.com/user-attachments/assets/034eb732-4401-47ce-bfd0-81aff84a0812
 
+Uzylem Gemini zamiast ChataGPT bo OpenAI nie oferuje juz chyba darmowych api kluczy, a Gemini dla studentow tak.
+
 3.0 - :white_check_mark: - [commit](https://github.com/Pug0r/studia-ebiznes/commit/62df8912af8f833e75394feffd690738205bd8f9)
 
 3.5 - :x:
