@@ -1,5 +1,17 @@
 # studia-ebiznes
 
+## lab-10-cloud
+
+3.0 - :white_check_mark: - [deployed app (lab03-ktor) here](https://ebiznes-lab10-d2c7hca8bqfrbgea.westeurope-01.azurewebsites.net/api/categories)
+
+3.5 - :x:
+
+4.0 - :x:
+
+4.5 - :x:
+
+5.0 - :x:
+
 ## lab-09-llm
 
 https://github.com/user-attachments/assets/034eb732-4401-47ce-bfd0-81aff84a0812
