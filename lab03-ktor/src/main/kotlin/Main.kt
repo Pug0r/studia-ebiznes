@@ -14,12 +14,14 @@ import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation as ClientNegotiation
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation as ServerNegotiation
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 val mockData = mapOf(
@@ -30,39 +32,56 @@ val mockData = mapOf(
 
 @OptIn(PrivilegedIntent::class)
 suspend fun main() {
-    val kord = Kord(System.getenv("DISCORD_BOT_TOKEN")!!)
-    val channelId = Snowflake(System.getenv("DISCORD_CHANNEL_ID")!!.trim())
+    val token = System.getenv("DISCORD_BOT_TOKEN")?.trim().orEmpty()
+    val channelId = System.getenv("DISCORD_CHANNEL_ID")
+        ?.trim()
+        ?.takeIf { it.isNotBlank() }
+        ?.let { runCatching { Snowflake(it) }.getOrNull() }
+    val kord = token.takeIf { it.isNotBlank() }?.let { Kord(it) }
 
-    kord.launch {
-        embeddedServer(Netty, port = 8080) {
-            install(ServerNegotiation) { json() }
-            routing {
-                get("/api/say/{text}") {
-                    val text = call.parameters["text"]!!
-                    kord.rest.channel.createMessage(channelId) { content = "Message from the Web: **$text**" }
-                    call.respondText("Success! Sent '$text' to Discord.")
+    coroutineScope {
+        launch {
+            embeddedServer(Netty, port = 8080) {
+                install(ServerNegotiation) { json() }
+                routing {
+                    get("/api/say/{text}") {
+                        if (kord == null || channelId == null) {
+                            call.respondText("Discord is not configured.", status = HttpStatusCode.ServiceUnavailable)
+                            return@get
+                        }
+                        val text = call.parameters["text"] ?: run {
+                            call.respondText("Missing text.", status = HttpStatusCode.BadRequest)
+                            return@get
+                        }
+                        kord.rest.channel.createMessage(channelId) { content = "Message from the Web: **$text**" }
+                        call.respondText("Success! Sent '$text' to Discord.")
+                    }
+                    get("/api/categories") { call.respond(mockData.keys.toList()) }
+                    get("/api/category/{name}") {
+                        mockData[call.parameters["name"]?.lowercase()]?.let { call.respond(it) } ?: call.respondText("Not Found")
+                    }
                 }
-                get("/api/categories") { call.respond(mockData.keys.toList()) }
-                get("/api/category/{name}") {
-                    mockData[call.parameters["name"]?.lowercase()]?.let { call.respond(it) } ?: call.respondText("Not Found")
-                }
-            }
-        }.start(wait = true)
-    }
-
-    val client = HttpClient(CIO) { install(ClientNegotiation) { json() } }
-
-    kord.createGlobalChatInputCommand("categories", "Lists categories from API")
-    kord.createGlobalChatInputCommand("category", "Gets products from API") { string("name", "Category name") { required = true } }
-
-    kord.on<ChatInputCommandInteractionCreateEvent> {
-        val response = interaction.deferPublicResponse()
-        val cmd = interaction.command
-        when (cmd.rootName) {
-            "categories" -> response.respond { content = "API says: ${client.get("http://localhost:8080/api/categories").body<List<String>>().joinToString()}" }
-            "category" -> response.respond { content = "Products in ${cmd.strings["name"]}: ${client.get("http://localhost:8080/api/category/${cmd.strings["name"]}").body<List<String>>().joinToString()}" }
+            }.start(wait = true)
         }
-    }
 
-    kord.login { intents += Intent.MessageContent }
+        if (kord == null) {
+            return@coroutineScope
+        }
+
+        val client = HttpClient(CIO) { install(ClientNegotiation) { json() } }
+
+        kord.createGlobalChatInputCommand("categories", "Lists categories from API")
+        kord.createGlobalChatInputCommand("category", "Gets products from API") { string("name", "Category name") { required = true } }
+
+        kord.on<ChatInputCommandInteractionCreateEvent> {
+            val response = interaction.deferPublicResponse()
+            val cmd = interaction.command
+            when (cmd.rootName) {
+                "categories" -> response.respond { content = "API says: ${client.get("http://localhost:8080/api/categories").body<List<String>>().joinToString()}" }
+                "category" -> response.respond { content = "Products in ${cmd.strings["name"]}: ${client.get("http://localhost:8080/api/category/${cmd.strings["name"]}").body<List<String>>().joinToString()}" }
+            }
+        }
+
+        kord.login { intents += Intent.MessageContent }
+    }
 }
